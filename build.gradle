@@ -10,7 +10,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.5.0'
+        classpath 'com.android.tools.build:gradle:7.0.1'
     }
 }
 
@@ -24,7 +24,7 @@ android {
     compileSdkVersion 29
 
     defaultConfig {
-        minSdkVersion 27
+        minSdkVersion 28
         targetSdkVersion 29
     }
 
