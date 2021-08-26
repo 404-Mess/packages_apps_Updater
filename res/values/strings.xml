@@ -154,4 +154,5 @@
     <string name="dialog_permissions_title">Permissions</string>
     <string name="dialog_permissions_dismiss">Dismiss</string>
     <string name="dialog_permissions_ask">Ask again</string>
+    <string name="version">Rippa 4.5</string>
 </resources>

@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:backgroundTint="@color/theme_primary_dark"
     android:focusable="true"
     android:foreground="?attr/selectableItemBackground"
     android:nextFocusRight="@+id/update_action"
@@ -33,6 +34,7 @@
                 android:drawablePadding="8dp"
                 android:maxLines="1"
                 android:paddingBottom="8sp"
+                android:textFontWeight="500"
                 android:textColor="?android:attr/textColorPrimary"
                 android:textSize="16sp"
                 tools:text="Project-404" />
@@ -43,6 +45,7 @@
                 android:layout_height="wrap_content"
                 android:maxLines="1"
                 android:textSize="14sp"
+                android:fontFamily="@font/roboto_regular"
                 tools:text="29 February 2018" />
 
             <RelativeLayout
@@ -65,6 +68,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/progress_bar"
                     android:ellipsize="marquee"
+                    android:fontFamily="@font/roboto_regular"
                     android:singleLine="true"
                     android:visibility="invisible"
                     tools:text="162 of 300 MB (3 minutes left) • 65%"
@@ -76,6 +80,7 @@
                     android:layout_height="wrap_content"
                     android:paddingTop="8sp"
                     android:singleLine="true"
+                    android:fontFamily="@font/roboto_regular"
                     tools:text="300 MB"
                     tools:visibility="invisible" />
 
@@ -89,6 +94,7 @@
                     android:layout_gravity="right"
                     android:gravity="right"
                     android:text="@string/action_changelog"
+                    android:textFontWeight="500"
                     android:textAllCaps="true" />
             </RelativeLayout>
         </LinearLayout>
@@ -103,6 +109,7 @@
                 android:id="@id/update_action"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textFontWeight="500"
                 android:background="@drawable/rounded_button"
                 tools:text="Pause" />
 
