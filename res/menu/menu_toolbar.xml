@@ -10,7 +10,7 @@
     <item
         android:id="@+id/menu_preferences"
         android:title="@string/menu_preferences"
-        android:icon="@drawable/ic_app_settings_alt"
+        android:icon="@drawable/ic_app_settings"
         app:showAsAction="ifRoom" />
 
 </menu>
