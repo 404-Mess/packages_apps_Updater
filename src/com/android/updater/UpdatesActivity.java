@@ -44,7 +44,6 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
@@ -56,6 +55,7 @@ import androidx.recyclerview.widget.SimpleItemAnimator;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.json.JSONException;
 import com.android.updater.controller.UpdaterController;
@@ -86,7 +86,7 @@ public class UpdatesActivity extends UpdatesListActivity {
 
     private UpdatesListAdapter mAdapter;
 
-    private View mRefreshIconView;
+    private FloatingActionButton mRefreshIconView;
     private RotateAnimation mRefreshAnimation;
 
     private static final int READ_REQUEST_CODE = 42;
@@ -103,7 +103,7 @@ public class UpdatesActivity extends UpdatesListActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_updates);
-
+        mRefreshIconView = findViewById(R.id.refresh);
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         mAdapter = new UpdatesListAdapter(this);
         recyclerView.setAdapter(mAdapter);
@@ -132,6 +132,9 @@ public class UpdatesActivity extends UpdatesListActivity {
                 }
             }
         };
+        mRefreshIconView.setOnClickListener(v -> {
+            downloadUpdatesList(true);
+        });
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -216,10 +219,6 @@ public class UpdatesActivity extends UpdatesListActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.menu_refresh: {
-                downloadUpdatesList(true);
-                return true;
-            }
             case R.id.menu_preferences: {
                 showPreferencesDialog();
                 return true;
@@ -363,6 +362,7 @@ public class UpdatesActivity extends UpdatesListActivity {
                     processNewJson(jsonFile, jsonFileTmp, manualRefresh);
                     refreshAnimationStop();
                 });
+                mRefreshIconView.setVisibility(View.GONE);
             }
         };
 
@@ -415,9 +415,6 @@ public class UpdatesActivity extends UpdatesListActivity {
     }
 
     private void refreshAnimationStart() {
-        if (mRefreshIconView == null) {
-            mRefreshIconView = findViewById(R.id.menu_refresh);
-        }
         if (mRefreshIconView != null) {
             mRefreshAnimation.setRepeatCount(Animation.INFINITE);
             mRefreshIconView.startAnimation(mRefreshAnimation);
@@ -443,7 +440,6 @@ public class UpdatesActivity extends UpdatesListActivity {
         autoCheckInterval.setSelection(Utils.getUpdateCheckSetting(this));
         autoDelete.setChecked(prefs.getBoolean(Constants.PREF_AUTO_DELETE_UPDATES, false));
         dataWarning.setChecked(prefs.getBoolean(Constants.PREF_MOBILE_DATA_WARNING, true));
-
         new AlertDialog.Builder(this)
                 .setTitle(R.string.menu_preferences)
                 .setView(view)
@@ -496,22 +492,23 @@ public class UpdatesActivity extends UpdatesListActivity {
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         switch (requestCode) {
             case PERMISSION_REQUEST_CODE:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 } else {
-                        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
-                                != PackageManager.PERMISSION_GRANTED) {
-                            showMessageOKCancel(getString(R.string.dialog_permissions_title),
-                                    new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                                                checkStoragePermissions();
-                                            }
+                    if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
+                            != PackageManager.PERMISSION_GRANTED) {
+                        showMessageOKCancel(getString(R.string.dialog_permissions_title),
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                                            checkStoragePermissions();
                                         }
-                                    });
-                        }
+                                    }
+                                });
+                    }
                 }
                 break;
         }

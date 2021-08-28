@@ -25,8 +25,8 @@
             android:id="@+id/preferences_auto_updates_check_interval"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:entries="@array/menu_auto_updates_check_interval_entries" />
+            android:entries="@array/menu_auto_updates_check_interval_entries"
+            android:layout_weight="1"/>
     </LinearLayout>
 
     <Switch
