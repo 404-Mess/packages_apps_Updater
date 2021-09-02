@@ -38,7 +38,7 @@ public final class Constants {
 
     public static final String PROP_BUILD_DATE = "ro.build.date.utc";
     public static final String PROP_BUILD_VERSION = "ro.build.version.release";
-    public static final String PROP_DEVICE = "ro.product.device";
+    public static final String PROP_DEVICE = "ro.404.device";
     public static final String PROP_RELEASE_TYPE = "ro.build.type";
     public static final String PROP_RECOVERY_UPDATE = "persist.sys.recovery_update";
 
